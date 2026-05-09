@@ -70,7 +70,26 @@ layout: default
       <div class="paper-container">
         {% if section.title %}<h2>{{ section.title }}</h2>{% endif %}
 
-        {% if section.image %}
+        {% if section.video %}
+          <figure class="paper-media paper-video">
+            {% if section.video.src contains "://" %}
+              {% assign video_src = section.video.src %}
+            {% else %}
+              {% assign video_src = section.video.src | prepend: base_path %}
+            {% endif %}
+            {% if section.video.poster %}
+              {% if section.video.poster contains "://" %}
+                {% assign poster_src = section.video.poster %}
+              {% else %}
+                {% assign poster_src = section.video.poster | prepend: base_path %}
+              {% endif %}
+            {% endif %}
+            <video controls playsinline preload="metadata"{% if poster_src %} poster="{{ poster_src }}"{% endif %}>
+              <source src="{{ video_src }}" type="{{ section.video.type | default: 'video/mp4' }}">
+            </video>
+            {% if section.video.caption %}<figcaption>{{ section.video.caption }}</figcaption>{% endif %}
+          </figure>
+        {% elsif section.image %}
           <figure class="paper-media">
             {% if section.image.src contains "://" %}
               {% assign image_src = section.image.src %}
@@ -100,6 +119,34 @@ layout: default
               <li>{{ item }}</li>
             {% endfor %}
           </ul>
+        {% endif %}
+
+        {% if section.cards %}
+          <div class="paper-card-grid">
+            {% for card in section.cards %}
+              <article class="paper-card">
+                {% if card.label %}<p class="paper-card-label">{{ card.label }}</p>{% endif %}
+                {% if card.title %}<h3>{{ card.title }}</h3>{% endif %}
+                {% if card.text %}<p>{{ card.text }}</p>{% endif %}
+              </article>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {% if section.figures %}
+          <div class="paper-figure-grid">
+            {% for figure in section.figures %}
+              <figure class="paper-figure-card{% if figure.size %} paper-figure-card--{{ figure.size }}{% endif %}">
+                {% if figure.src contains "://" %}
+                  {% assign figure_src = figure.src %}
+                {% else %}
+                  {% assign figure_src = figure.src | prepend: base_path %}
+                {% endif %}
+                <img src="{{ figure_src }}" alt="{{ figure.alt | default: figure.caption | default: section.title }}">
+                {% if figure.caption %}<figcaption>{{ figure.caption }}</figcaption>{% endif %}
+              </figure>
+            {% endfor %}
+          </div>
         {% endif %}
       </div>
     </section>

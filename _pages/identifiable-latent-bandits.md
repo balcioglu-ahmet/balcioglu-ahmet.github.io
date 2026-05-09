@@ -31,7 +31,8 @@ paper_sections:
       - >
         Sequential decision-making algorithms such as multi-armed bandits can find optimal personalized decisions, but are notoriously sample-hungry. In personalized medicine, for example, training a bandit from scratch for every patient is typically infeasible, as the number of trials required is much larger than the number of decision points for a single patient. To combat this, latent bandits offer rapid exploration and personalization beyond what context variables alone can offer, provided that a latent variable model of problem instances can be learned consistently. However, existing works give no guidance as to how such a model can be found.
       - >
-        In this work, we propose an identifiable latent bandit framework that leads to optimal decision-making with a shorter exploration time than classical bandits by learning from historical records of decisions and outcomes. Our method is based on nonlinear independent component analysis that provably identifies representations from observational data sufficient to infer optimal actions in new bandit instances. We verify this strategy in simulated and semi-synthetic environments, showing substantial improvement over online and offline learning baselines when identifying conditions are satisfied.
+        In this work, we propose an identifiable latent bandit (ILB) framework that leads to optimal decision-making with a shorter exploration time than classical bandits by learning from historical records of decisions and outcomes. Our method is based on nonlinear independent component analysis that provably identifies representations from observational data sufficient to infer optimal actions in new bandit instances. We verify this strategy in simulated and semi-synthetic environments, showing substantial improvement over online and offline learning baselines when identifying conditions are satisfied.
+      - >
         Identifiable latent bandits use observational histories from previous instances to learn the hidden structure shared across individuals. The learned representation is then used online to infer a new instance's latent state from repeated contexts and choose actions with less exploration.
   - title: "Contributions"
     cards_layout: "scroll"
@@ -50,10 +51,11 @@ paper_sections:
         text: "Shows that, when identifying conditions hold, the algorithms improve over online bandits and offline regression baselines in synthetic and semi-synthetic treatment environments."
   - title: "Video"
     video:
-      src: "/assets/papers/identifiable-latent-bandits/video/ilb-placeholder.mp4"
+      src: "/assets/papers/identifiable-latent-bandits/video/ilb-video.mp4"
       poster: "/assets/papers/identifiable-latent-bandits/video/ilb-placeholder-poster.png"
-      caption: "Placeholder video for the identifiable latent bandits project page."
-  - title: "Research Question"
+      caption: "A brief introduction to identifiable latent bandits (ILB)."
+  - title: "Motivation"
+    description: "For many chronic diseases, treatment is individualized and sequential: patients go through a long process of trying different options over time: <br><strong>How can we use observational data to shorten treatment times?</strong>"
     cards:
       - label: "Why latent bandits?"
         title: "Context alone is not enough"
@@ -119,7 +121,7 @@ paper_sections:
       - src: "/assets/papers/identifiable-latent-bandits/images/results-emission-noise.png"
         alt: "Context emission noise cumulative regret results."
         caption: "Increasing context noise stresses the learned latent variable model and highlights the benefit of adaptive variants."
-  - title: "Takeaway"
+  - title: "Conclusion"
     paragraphs:
       - >
         The central message is that latent bandits do not need to assume their latent variable model is known in advance. Under identifiable structure, the model can be learned from observational histories and then used to reduce online exploration for future personalized decisions.

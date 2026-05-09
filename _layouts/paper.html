@@ -69,6 +69,7 @@ layout: default
     <section class="paper-section">
       <div class="paper-container">
         {% if section.title %}<h2>{{ section.title }}</h2>{% endif %}
+        {% if section.description %}<p class="paper-section-description">{{ section.description }}</p>{% endif %}
 
         {% if section.video %}
           <figure class="paper-media paper-video">

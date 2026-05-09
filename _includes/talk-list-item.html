@@ -1,0 +1,25 @@
+{% include base_path %}
+
+{% assign talk_title = post.title | markdownify | remove: "<p>" | remove: "</p>" | strip %}
+{% assign talk_date = post.date | date: "%B %-d, %Y" %}
+{% if post.slidesurl contains "://" %}
+  {% assign slides_url = post.slidesurl %}
+{% else %}
+  {% assign slides_url = post.slidesurl | prepend: base_path %}
+{% endif %}
+
+<li class="talk-list__item">
+  <h3 class="talk-list__title">
+    {{ talk_title }}
+  </h3>
+
+  <p class="talk-list__details">
+    {{ post.type }}{% if post.venue %}, {{ post.venue }}{% endif %}{% if post.location %}, {{ post.location }}{% endif %}{% if post.date %}, {{ talk_date }}{% endif %}.
+  </p>
+
+  {% if post.slidesurl %}
+    <p class="talk-list__links">
+      <a class="publication-list__button" href="{{ slides_url }}">pdf</a>
+    </p>
+  {% endif %}
+</li>

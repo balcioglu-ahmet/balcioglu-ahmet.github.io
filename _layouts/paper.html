@@ -1,0 +1,130 @@
+---
+layout: default
+---
+
+{% include base_path %}
+
+{% assign paper_title = page.paper_title | default: page.title %}
+{% assign paper_description = page.paper_description | default: page.description %}
+{% assign body_content = content | strip %}
+
+<main class="paper-page">
+  <section class="paper-hero">
+    <div class="paper-container paper-container--narrow">
+      {% if page.paper_venue %}
+        <p class="paper-venue">{{ page.paper_venue }}</p>
+      {% endif %}
+
+      <h1 class="paper-title">{{ paper_title }}</h1>
+
+      {% if paper_description %}
+        <p class="paper-description">{{ paper_description }}</p>
+      {% endif %}
+
+      {% if page.paper_authors %}
+        <div class="paper-authors" aria-label="Authors">
+          {% for author in page.paper_authors %}
+            <span class="paper-author">
+              {% if author.url %}
+                <a href="{{ author.url }}">{{ author.name }}</a>
+              {% else %}
+                {{ author.name }}
+              {% endif %}
+              {% if author.affiliation %}<sup>{{ author.affiliation }}</sup>{% endif %}{% unless forloop.last %},{% endunless %}
+            </span>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if page.paper_affiliations %}
+        <div class="paper-affiliations" aria-label="Affiliations">
+          {% for affiliation in page.paper_affiliations %}
+            <span><sup>{{ affiliation.number }}</sup>{{ affiliation.name }}{% unless forloop.last %},{% endunless %}</span>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if page.paper_links %}
+        <div class="paper-links" aria-label="Paper links">
+          {% for item in page.paper_links %}
+            <a class="paper-link-button" href="{{ item.url }}">
+              {% if item.icon %}<i class="{{ item.icon }}" aria-hidden="true"></i>{% endif %}
+              <span>{{ item.label }}</span>
+            </a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  {% if page.paper_notice %}
+    <section class="paper-section">
+      <div class="paper-container">
+        <div class="paper-notice">{{ page.paper_notice }}</div>
+      </div>
+    </section>
+  {% endif %}
+
+  {% for section in page.paper_sections %}
+    <section class="paper-section">
+      <div class="paper-container">
+        {% if section.title %}<h2>{{ section.title }}</h2>{% endif %}
+
+        {% if section.image %}
+          <figure class="paper-media">
+            {% if section.image.src contains "://" %}
+              {% assign image_src = section.image.src %}
+            {% else %}
+              {% assign image_src = section.image.src | prepend: base_path %}
+            {% endif %}
+            <img src="{{ image_src }}" alt="{{ section.image.alt | default: section.title }}">
+            {% if section.image.caption %}<figcaption>{{ section.image.caption }}</figcaption>{% endif %}
+          </figure>
+        {% elsif section.placeholder %}
+          <div class="paper-media paper-media--placeholder">
+            <span>{{ section.placeholder }}</span>
+          </div>
+        {% endif %}
+
+        {% if section.paragraphs %}
+          <div class="paper-content">
+            {% for paragraph in section.paragraphs %}
+              <p>{{ paragraph }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {% if section.items %}
+          <ul class="paper-list">
+            {% for item in section.items %}
+              <li>{{ item }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    </section>
+  {% endfor %}
+
+  {% if body_content != "" %}
+    <section class="paper-section">
+      <div class="paper-container paper-content">
+        {{ content }}
+      </div>
+    </section>
+  {% endif %}
+
+  {% if page.paper_bibtex %}
+    <section class="paper-section" id="bibtex">
+      <div class="paper-container">
+        <h2>BibTeX</h2>
+        <pre class="paper-bibtex"><code>{{ page.paper_bibtex | escape }}</code></pre>
+      </div>
+    </section>
+  {% endif %}
+
+  <section class="paper-credit">
+    <div class="paper-container">
+      Page structure adapted from the <a href="https://github.com/tonyh2021/papers">Papers</a> template, inspired by <a href="https://nerfies.github.io/">Nerfies</a>.
+    </div>
+  </section>
+</main>

@@ -1,0 +1,28 @@
+{% include base_path %}
+
+{% assign publication_title = post.title | markdownify | remove: "<p>" | remove: "</p>" | strip %}
+{% if post.paperurl contains "://" %}
+  {% assign pdf_url = post.paperurl %}
+{% else %}
+  {% assign pdf_url = post.paperurl | prepend: base_path %}
+{% endif %}
+{% if post.projecturl contains "://" %}
+  {% assign project_url = post.projecturl %}
+{% else %}
+  {% assign project_url = post.projecturl | prepend: base_path %}
+{% endif %}
+
+<li class="publication-list__item">
+  <h3 class="publication-list__title">
+    {{ publication_title }}
+  </h3>
+
+  {% if post.citation %}
+    <p class="publication-list__citation">{{ post.citation }}</p>
+  {% endif %}
+
+  <p class="publication-list__links">
+    <a class="publication-list__button" href="{{ pdf_url }}">pdf</a>
+    <a class="publication-list__button publication-list__button--project" href="{{ project_url }}">project page</a>
+  </p>
+</li>

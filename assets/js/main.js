@@ -1,108 +1,64 @@
 $(function() {
-    
     "use strict";
-    
-    //===== Prealoder
-    
-    $(window).on('load', function(event) {
-        $('#preloader').delay(500).fadeOut(500);
-    });
-    
-    
-    //===== Mobile Menu 
-    
+
+    var scrollLink = $('.page-scroll[href^="#"]');
+    var backToTop = $('.back-to-top');
+
+    function setActiveLink(scrollTop) {
+        scrollLink.each(function() {
+            var target = $(this.hash);
+
+            if (!target.length) {
+                return;
+            }
+
+            if (target.offset().top - 90 <= scrollTop) {
+                $(this).parent().addClass('active');
+                $(this).parent().siblings().removeClass('active');
+            }
+        });
+    }
+
     $(".navbar-toggler").on('click', function() {
         $(this).toggleClass('active');
     });
-    
+
     $(".navbar-nav a").on('click', function() {
         $(".navbar-toggler").removeClass('active');
-    });
-    
-    
-    //===== close navbar-collapse when a  clicked
-    
-    $(".navbar-nav a").on('click', function () {
         $(".navbar-collapse").removeClass("show");
     });
-    
-    
-    //===== Sticky
-    
-    $(window).on('scroll',function(event) {    
-        var scroll = $(window).scrollTop();
-        if (scroll < 10) {
-            $(".navgition").removeClass("sticky");
-        }else{
-            $(".navgition").addClass("sticky");
+
+    scrollLink.on('click', function(event) {
+        var target = $(this.hash);
+
+        if (target.length) {
+            event.preventDefault();
+            $('html, body').animate({
+                scrollTop: target.offset().top - 85
+            }, 800);
         }
     });
-    
-    
-    //===== Section Menu Active
-    
-    var scrollLink = $('.page-scroll');
-        // Active link switching
-        $(window).scroll(function() {
-        var scrollbarLocation = $(this).scrollTop();
 
-        scrollLink.each(function() {
+    $(window).on('scroll', function() {
+        var scrollTop = $(this).scrollTop();
 
-          var sectionOffset = $(this.hash).offset().top - 90;
+        $(".navgition").toggleClass("sticky", scrollTop >= 10);
+        setActiveLink(scrollTop);
 
-          if ( sectionOffset <= scrollbarLocation ) {
-            $(this).parent().addClass('active');
-            $(this).parent().siblings().removeClass('active');
-          }
-        });
-    });
-    
-    
-    //====== Magnific Popup
-    
-    $('.video-popup').magnificPopup({
-        type: 'iframe'
-        // other options
-    });
-    
-    
-    //===== Back to top
-    
-    // Show or hide the sticky footer button
-    $(window).on('scroll', function(event) {
-        if($(this).scrollTop() > 600){
-            $('.back-to-top').fadeIn(200)
-        } else{
-            $('.back-to-top').fadeOut(200)
+        if (scrollTop > 600) {
+            backToTop.fadeIn(200);
+        } else {
+            backToTop.fadeOut(200);
         }
     });
-    
-    
-    //Animate the scroll to yop
-    $('.back-to-top').on('click', function(event) {
+
+    backToTop.on('click', function(event) {
         event.preventDefault();
-        
+
         $('html, body').animate({
-            scrollTop: 0,
-        }, 1500);
+            scrollTop: 0
+        }, 800);
     });
-    
-    
-    //===== 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+    $(window).trigger('scroll');
 });

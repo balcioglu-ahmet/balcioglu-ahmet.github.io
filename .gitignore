@@ -10,5 +10,7 @@ _site/
 .jekyll-metadata
 .bundle/
 vendor/
+!_sass/vendor/
+!_sass/vendor/**
 Gemfile.lock
 node_modules/

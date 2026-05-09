@@ -170,6 +170,19 @@
   font-family: $global-font-family;
 }
 
+.paper-card-grid--scroll {
+  display: block;
+  width: min(100%, 760px);
+  max-height: 21rem;
+  overflow-y: auto;
+  padding-right: 0.4rem;
+  scrollbar-width: thin;
+}
+
+.paper-card-grid--scroll .paper-card + .paper-card {
+  margin-top: 0.75rem;
+}
+
 .paper-card {
   padding: 1rem;
   border: 1px solid var(--global-border-color);
@@ -257,17 +270,6 @@
   border-radius: $border-radius;
   background: var(--global-code-background-color);
   font-size: 0.8rem;
-}
-
-.paper-credit {
-  padding: 1rem 0 0;
-  color: var(--global-text-color-light);
-  font-size: 0.72rem;
-  text-align: center;
-}
-
-.paper-credit a {
-  color: inherit;
 }
 
 @include breakpoint($small) {

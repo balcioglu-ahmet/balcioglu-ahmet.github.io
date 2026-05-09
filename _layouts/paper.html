@@ -122,7 +122,7 @@ layout: default
         {% endif %}
 
         {% if section.cards %}
-          <div class="paper-card-grid">
+          <div class="paper-card-grid{% if section.cards_layout %} paper-card-grid--{{ section.cards_layout }}{% endif %}">
             {% for card in section.cards %}
               <article class="paper-card">
                 {% if card.label %}<p class="paper-card-label">{{ card.label }}</p>{% endif %}
@@ -169,9 +169,4 @@ layout: default
     </section>
   {% endif %}
 
-  <section class="paper-credit">
-    <div class="paper-container">
-      Page structure adapted from the <a href="https://github.com/tonyh2021/papers">Papers</a> template, inspired by <a href="https://nerfies.github.io/">Nerfies</a>.
-    </div>
-  </section>
 </main>
